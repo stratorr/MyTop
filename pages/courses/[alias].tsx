@@ -1,10 +1,11 @@
 import { withLayout } from "../../layout/Layout";
 
+import { ParsedUrlQuery } from "querystring";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import axios from "axios";
+
 import { MenuItem } from "../../interfaces/menu.interface";
 import { TopPageModel } from "../../interfaces/page.interface";
-import { ParsedUrlQuery } from "querystring";
 import { ProductModel } from "../../interfaces/products.interface";
 
 const firstCategory = 0;
@@ -12,8 +13,6 @@ const firstCategory = 0;
 const Course = ({ menu, page, products }: CourseProps): JSX.Element => {
     return <div>{products.length}</div>;
 };
-
-export default withLayout(Course);
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const { data: menu } = await axios.post<MenuItem[]>(
@@ -73,3 +72,5 @@ interface CourseProps extends Record<string, unknown> {
     page: TopPageModel;
     products: ProductModel[];
 }
+
+export default withLayout(Course);

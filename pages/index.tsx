@@ -6,10 +6,8 @@ import { GetStaticProps } from "next";
 import axios from "axios";
 import { MenuItem } from "../interfaces/menu.interface";
 
-const Home = ({ menu }: HomeProps): JSX.Element => {
+const Home = (): JSX.Element => {
     const [rating, setRating] = useState<number>(3);
-
-    console.log(menu);
 
     return (
         <>
@@ -32,13 +30,6 @@ const Home = ({ menu }: HomeProps): JSX.Element => {
                 1
             </Label>
             <Rating rating={rating} isEditable={true} setRating={setRating} />
-            <ul>
-                {menu.map((item) => {
-                    return (
-                        <li key={item._id.secondCategory}>{item._id.secondCategory}</li>
-                    );
-                })}
-            </ul>
         </>
     );
 };
