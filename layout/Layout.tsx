@@ -4,6 +4,7 @@ import { LayoutProps } from "./Layout.props";
 import { Sidebar } from "./Sidebar/Sidebar";
 
 import styles from "./Layout.module.css";
+
 import { FunctionComponent } from "react";
 
 export const Layout = ({ children }: LayoutProps): JSX.Element => {
@@ -20,7 +21,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
 export const withLayout = <T extends Record<string, unknown>>(
     Component: FunctionComponent<T>
 ) => {
-    return function withLayoutComponent(props: T): JSX.Element {
+    return function (props: T): JSX.Element {
         return (
             <Layout>
                 <Component {...props} />

@@ -1,10 +1,15 @@
-import type { NextPage } from "next";
 import { useState } from "react";
 import { Label, Button, P, Headline, Rating } from "../components";
-import { Layout, withLayout } from "../layout/Layout";
+import { withLayout } from "../layout/Layout";
 
-const Home: NextPage = () => {
+import { GetStaticProps } from "next";
+import axios from "axios";
+import { MenuItem } from "../interfaces/menu.interface";
+
+const Home = ({ menu }: HomeProps): JSX.Element => {
     const [rating, setRating] = useState<number>(3);
+
+    console.log(menu);
 
     return (
         <>
@@ -27,8 +32,37 @@ const Home: NextPage = () => {
                 1
             </Label>
             <Rating rating={rating} isEditable={true} setRating={setRating} />
+            <ul>
+                {menu.map((item) => {
+                    return (
+                        <li key={item._id.secondCategory}>{item._id.secondCategory}</li>
+                    );
+                })}
+            </ul>
         </>
     );
 };
 
 export default withLayout(Home);
+
+export const getStaticProps: GetStaticProps = async () => {
+    const firstCategory = 0;
+    const { data: menu } = await axios.post<HomeProps>(
+        process.env.NEXT_PUBLIC_DOMAIN + "/api/top-page/find",
+        {
+            firstCategory,
+        }
+    );
+
+    return {
+        props: {
+            menu,
+            firstCategory,
+        },
+    };
+};
+
+interface HomeProps extends Record<string, unknown> {
+    menu: MenuItem[];
+    category: number;
+}
